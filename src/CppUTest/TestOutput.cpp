@@ -139,6 +139,8 @@ void TestOutput::printCurrentGroupEnded(const TestResult& /*res*/)
 
 void TestOutput::printTestsEnded(const TestResult& result)
 {
+    //return;
+
     print("\n");
     if (result.getFailureCount() > 0) {
         if (color_) {

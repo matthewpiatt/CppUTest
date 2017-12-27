@@ -51,6 +51,7 @@ lib_libCppUTest_a_SOURCES = \
 	src/CppUTest/TestResult.cpp \
 	src/CppUTest/TestTestingFixture.cpp \
 	src/CppUTest/Utest.cpp \
+	src/CppUTest/mpiatt_logit.cpp \
 	src/Platforms/@CPP_PLATFORM@/UtestPlatform.cpp
 
 include_cpputestdir = $(includedir)/CppUTest
@@ -82,6 +83,7 @@ include_cpputest_HEADERS = \
 	include/CppUTest/TestTestingFixture.h \
 	include/CppUTest/Utest.h \
 	include/CppUTest/UtestMacros.h \
+	include/CppUTest/mpiatt_logit.h \
 	generated/CppUTestGeneratedConfig.h
 
 lib_libCppUTestExt_a_CPPFLAGS = $(lib_libCppUTest_a_CPPFLAGS)

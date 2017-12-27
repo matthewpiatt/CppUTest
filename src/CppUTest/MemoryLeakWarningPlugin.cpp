@@ -32,6 +32,8 @@
 #include "CppUTest/PlatformSpecificFunctions.h"
 #include "CppUTest/SimpleMutex.h"
 
+#include "CppUTest/mpiatt_logit.h"
+
 /********** Enabling and disabling for C also *********/
 
 #if CPPUTEST_USE_MEM_LEAK_DETECTION
@@ -301,11 +303,13 @@ static void (*operator_delete_array_fptr)(void* mem) UT_NOTHROW = mem_leak_opera
 
 void* operator new(size_t size) UT_THROW(std::bad_alloc)
 {
+    logit(__FILE__, __LINE__, "new", "unknown", 0, "", size);
     return operator_new_fptr(size);
 }
 
 void* operator new(size_t size, const char* file, int line) UT_THROW(std::bad_alloc)
 {
+    logit(__FILE__, __LINE__, "new", file, line, "", size);
     return operator_new_debug_fptr(size, file, line);
 }
 
@@ -326,11 +330,13 @@ void operator delete (void* mem, size_t) UT_NOTHROW
 
 void* operator new[](size_t size) UT_THROW(std::bad_alloc)
 {
+    logit(__FILE__, __LINE__, "new[]", "unknown", 0, "", size);
     return operator_new_array_fptr(size);
 }
 
 void* operator new [](size_t size, const char* file, int line) UT_THROW(std::bad_alloc)
 {
+    logit(__FILE__, __LINE__, "new[]", file, line, "", size);
     return operator_new_array_debug_fptr(size, file, line);
 }
 
@@ -353,11 +359,13 @@ void operator delete[] (void* mem, size_t) UT_NOTHROW
 
 void* operator new(size_t size, const std::nothrow_t&) UT_NOTHROW
 {
+    logit(__FILE__, __LINE__, "new_nothrow", "unknown", 0, "", size);
     return operator_new_nothrow_fptr(size);
 }
 
 void* operator new[](size_t size, const std::nothrow_t&) UT_NOTHROW
 {
+    logit(__FILE__, __LINE__, "new_nothrow[]", "unknown", 0, "", size);
     return operator_new_array_nothrow_fptr(size);
 }
 

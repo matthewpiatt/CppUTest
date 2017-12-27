@@ -104,6 +104,7 @@ public:
     static void deallocStringBuffer(char* str, const char* file, int line);
 private:
     char *buffer_;
+    bool shared_;
 
     static TestMemoryAllocator* stringAllocator_;
 

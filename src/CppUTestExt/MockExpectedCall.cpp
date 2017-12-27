@@ -542,6 +542,19 @@ void MockExpectedCallComposite::clear()
     }
 }
 
+const size_t MockExpectedCallComposite::get_call_count() const
+{
+    size_t count = 0;
+
+    MockExpectedCallCompositeNode* node = head_;
+    while (node) {
+        count++;
+        node = node->next_;
+    }
+
+    return count;
+}
+
 MockExpectedCall& MockExpectedCallComposite::withName(const SimpleString& name)
 {
     for (MockExpectedCallCompositeNode* node = head_; node != NULL; node = node->next_)

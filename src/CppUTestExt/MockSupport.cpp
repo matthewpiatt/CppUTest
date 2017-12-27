@@ -182,6 +182,12 @@ MockExpectedCall& MockSupport::expectNCalls(unsigned int amount, const SimpleStr
     return compositeCalls_;
 }
 
+
+const size_t MockSupport::get_call_count() const
+{
+    return compositeCalls_.get_call_count();
+}
+
 MockCheckedActualCall* MockSupport::createActualCall()
 {
     lastActualFunctionCall_ = new MockCheckedActualCall(++actualCallOrder_, activeReporter_, expectations_);

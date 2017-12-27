@@ -109,6 +109,7 @@ protected:
 
 private:
     SimpleString functionName_;
+    SimpleString* sharedFunctionName_;
 
     class MockExpectedFunctionParameter : public MockNamedValue
     {
@@ -175,6 +176,8 @@ public:
 
     virtual void add(MockExpectedCall& call);
     virtual void clear();
+    virtual const size_t get_call_count() const;
+
 private:
     MockExpectedCallCompositeNode* head_;
 };

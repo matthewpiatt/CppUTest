@@ -34,7 +34,7 @@
 class MockSupportPlugin : public TestPlugin
 {
 public:
-    MockSupportPlugin(const SimpleString& name = "MockSupportPLugin");
+    MockSupportPlugin(const SimpleString& name = "MockSupportPlugin");
     virtual ~MockSupportPlugin();
 
     virtual void preTestAction(UtestShell&, TestResult&) _override;

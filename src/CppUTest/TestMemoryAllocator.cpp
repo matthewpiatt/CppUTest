@@ -30,11 +30,14 @@
 #include "CppUTest/PlatformSpecificFunctions.h"
 #include "CppUTest/MemoryLeakDetector.h"
 
+#include "CppUTest/mpiatt_logit.h"
+
 static char* checkedMalloc(size_t size)
 {
     char* mem = (char*) PlatformSpecificMalloc(size);
     if (mem == 0)
     FAIL("malloc returned null pointer");
+    logit(__FILE__, __LINE__, "checkedMalloc", "unknown", 0, "", size);
     return mem;
 }
 
@@ -140,13 +143,15 @@ void TestMemoryAllocator::freeMemoryLeakNode(char* memory)
     free_memory(memory, "MemoryLeakNode", 1);
 }
 
-char* TestMemoryAllocator::alloc_memory(size_t size, const char*, int)
+char* TestMemoryAllocator::alloc_memory(size_t size, const char* file, int line)
 {
+    logit(__FILE__, __LINE__, "alloc_memory", file, line, "", size);
     return checkedMalloc(size);
 }
 
-void TestMemoryAllocator::free_memory(char* memory, const char*, int)
+void TestMemoryAllocator::free_memory(char* memory, const char* file, int line)
 {
+    logit(__FILE__, __LINE__, "free_memory", file, line, "", 0);
     PlatformSpecificFree(memory);
 }
 const char* TestMemoryAllocator::name()

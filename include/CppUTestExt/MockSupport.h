@@ -73,6 +73,8 @@ public:
     virtual void (*returnFunctionPointerValueOrDefault(void (*defaultValue)()))();
     virtual void (*functionPointerReturnValue())();
 
+    virtual const size_t get_call_count() const;
+
     bool hasData(const SimpleString& name);
     void setData(const SimpleString& name, bool value);
     void setData(const SimpleString& name, int value);

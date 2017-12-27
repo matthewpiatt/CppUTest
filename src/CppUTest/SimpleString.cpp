@@ -30,6 +30,11 @@
 #include "CppUTest/PlatformSpecificFunctions.h"
 #include "CppUTest/TestMemoryAllocator.h"
 
+#include "CppUTest/mpiatt_logit.h"
+#include <stdio.h>
+
+//static SimpleStringTracker tracker;
+
 TestMemoryAllocator* SimpleString::stringAllocator_ = NULL;
 
 TestMemoryAllocator* SimpleString::getStringAllocator()
@@ -80,6 +85,8 @@ int SimpleString::AtoI(const char* str)
 
 int SimpleString::StrCmp(const char* s1, const char* s2)
 {
+    if (!s1 || !s2) return 0;
+
    while(*s1 && *s1 == *s2) {
        ++s1;
        ++s2;
@@ -169,7 +176,28 @@ SimpleString::SimpleString(const char *other, size_t repeatCount)
 
 SimpleString::SimpleString(const SimpleString& other)
 {
-    buffer_ = copyToNewBuffer(other.buffer_);
+    const SimpleString* dupe = NULL;
+
+    // MGP: if we already have this string, why not share the pointer?
+//    if (StrLen(other.buffer_) > 0 && tracker.contains(&other))
+//    {
+//        dupe = tracker.getPointer(&other);
+//        printf("Reusing String [%s]\n", buffer_);
+//        if (dupe)
+//        {
+//            buffer_ = dupe->buffer_;
+//            shared_ = true;
+//        }
+//    }
+
+    if (!dupe)
+    {
+        //printf("Copying String [%s]\n", other.buffer_);
+        buffer_ = copyToNewBuffer(other.buffer_);
+        //tracker.add(other);
+    }
+
+    shared_ = true;
 }
 
 SimpleString& SimpleString::operator=(const SimpleString& other)
@@ -416,6 +444,7 @@ char* SimpleString::copyToNewBuffer(const char* bufferToCopy, size_t bufferSize)
     char* newBuffer = allocStringBuffer(bufferSize, __FILE__, __LINE__);
     StrNCpy(newBuffer, bufferToCopy, bufferSize);
     newBuffer[bufferSize-1] = '\0';
+    logit(__FILE__, __LINE__, "copyToNewBuffer", "unknown", 0, bufferToCopy, bufferSize);
     return newBuffer;
 }
 
